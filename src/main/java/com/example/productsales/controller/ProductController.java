@@ -27,7 +27,7 @@ public class ProductController {
 		return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
-	@PostMapping
+	@PostMapping("save")
 	public Product addProduct(@RequestBody Product product) {
 		return productService.addProduct(product);
 	}

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -14,17 +16,14 @@ import javax.persistence.Id;
 @javax.persistence.Entity
 public class Product {
 
-    @Id
-    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
     private String description;
     private double price;
     private int quantity;
-
-    @javax.persistence.OneToMany(mappedBy = "product", cascade = javax.persistence.CascadeType.ALL)
-    private List<Sale> sales;
 
 	
     public void setName(Product productDetails) {
@@ -40,7 +39,6 @@ public class Product {
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
-		this.sales = sales;
 	}
 
 
@@ -84,13 +82,5 @@ public class Product {
 		this.quantity = quantity;
 	}
 
-	public List<Sale> getSales() {
-		return sales;
-	}
-
-	public void setSales(List<Sale> sales) {
-		this.sales = sales;
-	}
-    // Constructors, Getters and Setters 
     
 }

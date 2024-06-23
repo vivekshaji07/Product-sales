@@ -32,7 +32,7 @@ public class SaleController {
         return saleService.addSale(sale);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteSale(@PathVariable Integer id) {
         saleService.deleteSale(id);
         return ResponseEntity.noContent().build();

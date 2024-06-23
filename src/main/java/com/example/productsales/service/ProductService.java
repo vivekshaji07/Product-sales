@@ -1,7 +1,10 @@
 package com.example.productsales.service;
 
 import com.example.productsales.entity.Product;
+import com.example.productsales.entity.Sale;
 import com.example.productsales.repository.ProductRepository;
+import com.example.productsales.repository.SaleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +18,8 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SaleRepository saleRepository;
 
     public Page<Product> getAllProducts(int page, int size) {
         return productRepository.findAll(PageRequest.of(page, size));
@@ -30,7 +35,7 @@ public class ProductService {
 
     public Product updateProduct(int id, Product productDetails) {
         return productRepository.findById(id).map(product -> {
-            product.setName(productDetails);
+            product.setName(productDetails.getName());
             product.setDescription(productDetails.getDescription());
             product.setPrice(productDetails.getPrice());
             product.setQuantity(productDetails.getQuantity());
@@ -46,18 +51,18 @@ public class ProductService {
     }
 
     public double getTotalRevenue() {
-        return productRepository.findAll().stream()
-                .flatMap(product -> product.getSales().stream())
-                .mapToDouble(sale -> sale.getQuantity() * sale.getProduct().getPrice())
-                .sum();
+    	 List<Sale> sales = saleRepository.findAll();
+         return sales.stream()
+                 .mapToDouble(sale -> sale.getProduct().getPrice() * sale.getQuantity())
+                 .sum();
+    	
     }
 
     public double getRevenueByProduct(int productId) {
-        return productRepository.findById(productId)
-                .map(product -> product.getSales().stream()
-                        .mapToDouble(sale -> sale.getQuantity() * sale.getProduct().getPrice())
-                        .sum())
-                .orElse(0.0);
+    	List<Sale> sales = saleRepository.findByproduct_id(productId);
+        return sales.stream()
+                .mapToDouble(sale -> sale.getProduct().getPrice() * sale.getQuantity())
+                .sum();
     }
     
     

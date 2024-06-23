@@ -18,7 +18,7 @@ public class SaleService {
         return saleRepository.findAll();
     }
 
-    public Optional<Sale> getSaleById(Integer id) {
+    public Optional<Sale> getSaleById(int id) {
         return saleRepository.findById(id);
     }
 
@@ -26,7 +26,7 @@ public class SaleService {
         return saleRepository.save(sale);
     }
 
-    public void deleteSale(Integer id) {
+    public void deleteSale(int id) {
         saleRepository.deleteById(id);
     }
 }

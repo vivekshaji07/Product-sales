@@ -2,6 +2,11 @@ package com.example.productsales.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,12 +16,13 @@ import lombok.Setter;
 @Setter
 public class Sale {
 
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
-    private Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
 
-    @javax.persistence.ManyToOne
-    @javax.persistence.JoinColumn(name = "product_id")
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     private int quantity;
@@ -24,7 +30,7 @@ public class Sale {
     
     public Sale() {}
     
-	public Sale(Long id, Product product, int quantity, LocalDate saleDate) {
+	public Sale(int id, Product product, int quantity, LocalDate saleDate) {
 		super();
 		this.id = id;
 		this.product = product;
@@ -32,10 +38,10 @@ public class Sale {
 		this.saleDate = saleDate;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public Product getProduct() {
@@ -56,8 +62,6 @@ public class Sale {
 	public void setSaleDate(LocalDate saleDate) {
 		this.saleDate = saleDate;
 	}
-
-    // Constructors, Getters and Setters
     
 }
 
